@@ -1,22 +1,30 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: NEXUS Web3 Global Integration API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: chains
+    description: Multi-chain network management
+  - name: partnerships
+    description: Partnership management
+  - name: ecosystem
+    description: Ecosystem projects
+  - name: agents
+    description: 2AG agent management
+  - name: stats
+    description: Dashboard stats and analytics
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +32,398 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /chains:
+    get:
+      operationId: listChains
+      tags: [chains]
+      summary: List all blockchain networks
+      responses:
+        "200":
+          description: List of chains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Chain"
+    post:
+      operationId: createChain
+      tags: [chains]
+      summary: Add a new blockchain network
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChainBody"
+      responses:
+        "201":
+          description: Chain created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chain"
+
+  /chains/{id}:
+    get:
+      operationId: getChain
+      tags: [chains]
+      summary: Get chain by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Chain details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chain"
+    put:
+      operationId: updateChain
+      tags: [chains]
+      summary: Update a chain
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChainBody"
+      responses:
+        "200":
+          description: Chain updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Chain"
+    delete:
+      operationId: deleteChain
+      tags: [chains]
+      summary: Remove a chain
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /partnerships:
+    get:
+      operationId: listPartnerships
+      tags: [partnerships]
+      summary: List all partnerships
+      responses:
+        "200":
+          description: List of partnerships
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Partnership"
+    post:
+      operationId: createPartnership
+      tags: [partnerships]
+      summary: Create a new partnership
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePartnershipBody"
+      responses:
+        "201":
+          description: Partnership created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partnership"
+
+  /partnerships/{id}:
+    get:
+      operationId: getPartnership
+      tags: [partnerships]
+      summary: Get partnership by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Partnership details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partnership"
+    put:
+      operationId: updatePartnership
+      tags: [partnerships]
+      summary: Update a partnership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePartnershipBody"
+      responses:
+        "200":
+          description: Partnership updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partnership"
+    delete:
+      operationId: deletePartnership
+      tags: [partnerships]
+      summary: Remove a partnership
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /ecosystem:
+    get:
+      operationId: listEcosystemProjects
+      tags: [ecosystem]
+      summary: List ecosystem projects
+      responses:
+        "200":
+          description: List of ecosystem projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EcosystemProject"
+    post:
+      operationId: createEcosystemProject
+      tags: [ecosystem]
+      summary: Add ecosystem project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEcosystemProjectBody"
+      responses:
+        "201":
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemProject"
+
+  /ecosystem/{id}:
+    get:
+      operationId: getEcosystemProject
+      tags: [ecosystem]
+      summary: Get ecosystem project by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemProject"
+    put:
+      operationId: updateEcosystemProject
+      tags: [ecosystem]
+      summary: Update an ecosystem project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEcosystemProjectBody"
+      responses:
+        "200":
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EcosystemProject"
+    delete:
+      operationId: deleteEcosystemProject
+      tags: [ecosystem]
+      summary: Remove a project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /agents:
+    get:
+      operationId: listAgents
+      tags: [agents]
+      summary: List all 2AG agents
+      responses:
+        "200":
+          description: List of agents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Agent"
+    post:
+      operationId: createAgent
+      tags: [agents]
+      summary: Deploy a new 2AG agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAgentBody"
+      responses:
+        "201":
+          description: Agent deployed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+
+  /agents/{id}:
+    get:
+      operationId: getAgent
+      tags: [agents]
+      summary: Get agent by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Agent details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+    put:
+      operationId: updateAgent
+      tags: [agents]
+      summary: Update an agent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAgentBody"
+      responses:
+        "200":
+          description: Agent updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+    delete:
+      operationId: deleteAgent
+      tags: [agents]
+      summary: Remove an agent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /stats/summary:
+    get:
+      operationId: getStatsSummary
+      tags: [stats]
+      summary: Global NEXUS dashboard stats
+      responses:
+        "200":
+          description: Summary statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsSummary"
+
+  /stats/activity:
+    get:
+      operationId: getActivityFeed
+      tags: [stats]
+      summary: Recent activity feed
+      responses:
+        "200":
+          description: Activity items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /stats/chain-breakdown:
+    get:
+      operationId: getChainBreakdown
+      tags: [stats]
+      summary: Agent and project counts per chain
+      responses:
+        "200":
+          description: Chain breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChainBreakdown"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +431,264 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Chain:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        symbol:
+          type: string
+        chainId:
+          type: integer
+        rpcUrl:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, testing]
+        tvl:
+          type: string
+        agentCount:
+          type: integer
+        createdAt:
+          type: string
+      required: [id, name, symbol, status, createdAt]
+
+    CreateChainBody:
+      type: object
+      properties:
+        name:
+          type: string
+        symbol:
+          type: string
+        chainId:
+          type: integer
+        rpcUrl:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, testing]
+        tvl:
+          type: string
+      required: [name, symbol, status]
+
+    Partnership:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum: [protocol, infrastructure, dao, exchange, launchpad, other]
+        status:
+          type: string
+          enum: [active, pending, negotiating, closed]
+        description:
+          type: string
+        website:
+          type: string
+        logoUrl:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+        createdAt:
+          type: string
+      required: [id, name, type, status, createdAt]
+
+    CreatePartnershipBody:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [protocol, infrastructure, dao, exchange, launchpad, other]
+        status:
+          type: string
+          enum: [active, pending, negotiating, closed]
+        description:
+          type: string
+        website:
+          type: string
+        logoUrl:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+      required: [name, type, status]
+
+    EcosystemProject:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+          enum: [defi, nft, gaming, dao, infrastructure, bridge, oracle, other]
+        status:
+          type: string
+          enum: [live, building, planned, paused]
+        description:
+          type: string
+        website:
+          type: string
+        logoUrl:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+        tvl:
+          type: string
+        users:
+          type: integer
+        createdAt:
+          type: string
+      required: [id, name, category, status, createdAt]
+
+    CreateEcosystemProjectBody:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+          enum: [defi, nft, gaming, dao, infrastructure, bridge, oracle, other]
+        status:
+          type: string
+          enum: [live, building, planned, paused]
+        description:
+          type: string
+        website:
+          type: string
+        logoUrl:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+        tvl:
+          type: string
+        users:
+          type: integer
+      required: [name, category, status]
+
+    Agent:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum: [nexus, bridge, oracle, guardian, scout, executor]
+        status:
+          type: string
+          enum: [active, idle, paused, error]
+        description:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+        transactionsProcessed:
+          type: integer
+        uptime:
+          type: number
+        lastActive:
+          type: string
+        createdAt:
+          type: string
+      required: [id, name, type, status, createdAt]
+
+    CreateAgentBody:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [nexus, bridge, oracle, guardian, scout, executor]
+        status:
+          type: string
+          enum: [active, idle, paused, error]
+        description:
+          type: string
+        chainIds:
+          type: array
+          items:
+            type: integer
+      required: [name, type, status]
+
+    StatsSummary:
+      type: object
+      properties:
+        totalAgents:
+          type: integer
+        activeAgents:
+          type: integer
+        totalChains:
+          type: integer
+        totalPartnerships:
+          type: integer
+        activePartnerships:
+          type: integer
+        totalEcosystemProjects:
+          type: integer
+        liveProjects:
+          type: integer
+        totalTransactions:
+          type: integer
+        totalTvl:
+          type: string
+        networkHealth:
+          type: number
+      required: [totalAgents, activeAgents, totalChains, totalPartnerships, activePartnerships, totalEcosystemProjects, liveProjects, totalTransactions, totalTvl, networkHealth]
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [agent_deployed, chain_added, partnership_signed, project_launched, transaction, alert]
+        title:
+          type: string
+        description:
+          type: string
+        timestamp:
+          type: string
+        entityId:
+          type: integer
+        entityType:
+          type: string
+      required: [id, type, title, timestamp]
+
+    ChainBreakdown:
+      type: object
+      properties:
+        chainName:
+          type: string
+        chainSymbol:
+          type: string
+        agentCount:
+          type: integer
+        projectCount:
+          type: integer
+        partnershipCount:
+          type: integer
+        tvl:
+          type: string
+      required: [chainName, chainSymbol, agentCount, projectCount, partnershipCount]
