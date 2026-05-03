@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Raleway:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -75,92 +75,155 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: 240 10% 4%;
-  --foreground: 0 0% 98%;
-  --border: 240 10% 12%;
-  --card: 240 10% 6%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 240 10% 12%;
-  --sidebar: 240 10% 4%;
-  --sidebar-foreground: 240 5% 70%;
-  --sidebar-border: 240 10% 12%;
-  --sidebar-primary: 189 100% 50%;
+  /* ── NEXUS Brand Colors ──────────────────────────
+     #0F172A  Azul Carbono  (background)
+     #00A8FF  Azul NEXUS    (primary)
+     #00F9FF  Ciano Tech    (chart-1 / accent glow)
+     #5D2BFF  Roxo Neon     (chart-2 / purple)
+     #885CF6  Roxo Elétrico (chart-3)
+     #E2E8F0  Cinza Claro   (foreground)
+  ─────────────────────────────────────────────── */
+  --background: 222 47% 7%;
+  --foreground: 213 27% 91%;
+  --border: 222 30% 16%;
+  --card: 222 47% 9%;
+  --card-foreground: 213 27% 91%;
+  --card-border: 222 30% 16%;
+
+  --sidebar: 222 47% 6%;
+  --sidebar-foreground: 213 20% 65%;
+  --sidebar-border: 222 30% 14%;
+  --sidebar-primary: 201 100% 50%;
   --sidebar-primary-foreground: 0 0% 0%;
-  --sidebar-accent: 240 10% 10%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 189 100% 50%;
-  --popover: 240 10% 6%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 240 10% 12%;
-  --primary: 189 100% 50%;
+  --sidebar-accent: 222 30% 12%;
+  --sidebar-accent-foreground: 213 27% 91%;
+  --sidebar-ring: 201 100% 50%;
+
+  --popover: 222 47% 9%;
+  --popover-foreground: 213 27% 91%;
+  --popover-border: 222 30% 16%;
+
+  /* Primary: #00A8FF — Azul NEXUS */
+  --primary: 201 100% 50%;
   --primary-foreground: 0 0% 0%;
-  --secondary: 240 10% 10%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 10% 10%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 240 10% 12%;
-  --accent-foreground: 189 100% 50%;
+
+  --secondary: 222 30% 13%;
+  --secondary-foreground: 213 27% 91%;
+  --muted: 222 30% 12%;
+  --muted-foreground: 222 15% 55%;
+  --accent: 222 30% 14%;
+  --accent-foreground: 201 100% 50%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --input: 240 10% 15%;
-  --ring: 189 100% 50%;
-  --chart-1: 189 100% 50%;
-  --chart-2: 213 100% 50%;
-  --chart-3: 280 100% 60%;
-  --chart-4: 340 100% 60%;
-  --chart-5: 45 100% 50%;
+  --input: 222 30% 16%;
+  --ring: 201 100% 50%;
 
-  --app-font-sans: 'Space Grotesk', sans-serif;
+  /* Chart: cyan · purple-neon · electric-purple · blue · gold */
+  --chart-1: 182 100% 50%;   /* #00F9FF — Ciano Tech    */
+  --chart-2: 254 100% 58%;   /* #5D2BFF — Roxo Neon     */
+  --chart-3: 264 87% 66%;    /* #885CF6 — Roxo Elétrico */
+  --chart-4: 201 100% 50%;   /* #00A8FF — Azul NEXUS    */
+  --chart-5: 45 100% 50%;    /* Gold                    */
+
+  /* Fonts — Orbitron (display) + Raleway (sans) + Share Tech Mono */
+  --app-font-sans: 'Raleway', sans-serif;
   --app-font-serif: Georgia, serif;
-  --app-font-mono: Menlo, monospace;
-  --app-font-display: 'Syncopate', sans-serif;
+  --app-font-mono: 'Share Tech Mono', 'Menlo', monospace;
+  --app-font-display: 'Orbitron', sans-serif;
 
   --radius: .5rem;
 
-  --shadow-2xs: 0px 2px 0px 0px hsl(189 100% 50% / 0.05);
-  --shadow-xs: 0px 2px 0px 0px hsl(189 100% 50% / 0.05);
-  --shadow-sm: 0px 2px 0px 0px hsl(189 100% 50% / 0.05), 0px 1px 2px -1px hsl(189 100% 50% / 0.05);
-  --shadow: 0px 2px 0px 0px hsl(189 100% 50% / 0.05), 0px 1px 2px -1px hsl(189 100% 50% / 0.05);
-  --shadow-md: 0px 2px 0px 0px hsl(189 100% 50% / 0.1), 0px 2px 4px -1px hsl(189 100% 50% / 0.05);
-  --shadow-lg: 0px 2px 0px 0px hsl(189 100% 50% / 0.1), 0px 4px 6px -1px hsl(189 100% 50% / 0.05);
-  --shadow-xl: 0px 2px 0px 0px hsl(189 100% 50% / 0.15), 0px 8px 10px -1px hsl(189 100% 50% / 0.1);
-  --shadow-2xl: 0px 2px 0px 0px hsl(189 100% 50% / 0.2);
+  --shadow-2xs: 0px 2px 0px 0px hsl(201 100% 50% / 0.05);
+  --shadow-xs:  0px 2px 0px 0px hsl(201 100% 50% / 0.05);
+  --shadow-sm:  0px 2px 0px 0px hsl(201 100% 50% / 0.05), 0px 1px 2px -1px hsl(201 100% 50% / 0.05);
+  --shadow:     0px 2px 0px 0px hsl(201 100% 50% / 0.05), 0px 1px 2px -1px hsl(201 100% 50% / 0.05);
+  --shadow-md:  0px 2px 0px 0px hsl(201 100% 50% / 0.10), 0px 2px 4px -1px hsl(201 100% 50% / 0.05);
+  --shadow-lg:  0px 2px 0px 0px hsl(201 100% 50% / 0.10), 0px 4px 6px -1px hsl(201 100% 50% / 0.05);
+  --shadow-xl:  0px 2px 0px 0px hsl(201 100% 50% / 0.15), 0px 8px 10px -1px hsl(201 100% 50% / 0.10);
+  --shadow-2xl: 0px 2px 0px 0px hsl(201 100% 50% / 0.20);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
   --sidebar-primary-border: hsl(var(--sidebar-primary));
-  --sidebar-accent-border: hsl(var(--sidebar-accent));
-  --primary-border: hsl(var(--primary));
-  --secondary-border: hsl(var(--secondary));
-  --muted-border: hsl(var(--muted));
-  --accent-border: hsl(var(--accent));
-  --destructive-border: hsl(var(--destructive));
+  --sidebar-accent-border:  hsl(var(--sidebar-accent));
+  --primary-border:         hsl(var(--primary));
+  --secondary-border:       hsl(var(--secondary));
+  --muted-border:           hsl(var(--muted));
+  --accent-border:          hsl(var(--accent));
+  --destructive-border:     hsl(var(--destructive));
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
+  body { @apply font-sans antialiased bg-background text-foreground; }
 
-  body {
-    @apply font-sans antialiased bg-background text-foreground;
+  /* Hex grid background for the whole app */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, hsl(254 100% 58% / 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, hsl(201 100% 50% / 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 60% 80%, hsl(182 100% 50% / 0.04) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
 @layer utilities {
-  input[type="search"]::-webkit-search-cancel-button {
-    @apply hidden;
-  }
+  input[type="search"]::-webkit-search-cancel-button { @apply hidden; }
 
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/5;
+    @apply bg-card/70 backdrop-blur-xl border border-white/5;
+    background-image: linear-gradient(135deg, hsl(201 100% 50% / 0.02) 0%, transparent 60%);
   }
 
+  /* Azul NEXUS glow */
   .glow-text {
-    text-shadow: 0 0 20px hsl(189 100% 50% / 0.6);
+    text-shadow:
+      0 0 10px hsl(201 100% 50% / 0.9),
+      0 0 30px hsl(201 100% 50% / 0.5),
+      0 0 60px hsl(201 100% 50% / 0.2);
   }
 
+  /* Subtle blue border glow */
   .glow-border {
-    box-shadow: 0 0 15px hsl(189 100% 50% / 0.15), inset 0 0 15px hsl(189 100% 50% / 0.05);
+    box-shadow:
+      0 0 20px hsl(201 100% 50% / 0.15),
+      0 0 1px  hsl(201 100% 50% / 0.4),
+      inset 0 0 20px hsl(201 100% 50% / 0.03);
+  }
+
+  /* Purple neon accent glow (for special elements) */
+  .glow-purple {
+    box-shadow:
+      0 0 20px hsl(254 100% 58% / 0.3),
+      0 0 1px  hsl(254 100% 58% / 0.6);
+  }
+
+  /* Hex-pattern clip for decorative backgrounds */
+  .hex-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpath d='M30 0 L60 17.3 L60 34.6 L30 52 L0 34.6 L0 17.3 Z' fill='none' stroke='%2300A8FF' stroke-width='0.4' stroke-opacity='0.12'/%3E%3C/svg%3E");
+    background-size: 60px 52px;
+  }
+
+  /* Orbitron display utility */
+  .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+  /* Scanline animation for HUD feel */
+  @keyframes scanline {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  .scanline::after {
+    content: '';
+    position: absolute;
+    inset-x: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, hsl(201 100% 50% / 0.15), transparent);
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
   }
 }
