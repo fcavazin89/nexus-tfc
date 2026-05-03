@@ -57,6 +57,63 @@ export const NexusAnalyzeResponse = zod.object({
   }),
   networkScore: zod.number(),
   summary: zod.string(),
+  graphMatches: zod.array(
+    zod.object({
+      nodeId: zod.number(),
+      name: zod.string(),
+      type: zod.string(),
+      category: zod.string().optional(),
+      chains: zod.array(zod.string()).optional(),
+      description: zod.string().optional(),
+      matchScore: zod.number(),
+      breakdown: zod.object({
+        categoryMatch: zod.number(),
+        chainAlignment: zod.number(),
+        tagRelevance: zod.number(),
+      }),
+      relationshipType: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Get the full ecosystem connection graph
+ */
+export const GetNexusGraphResponse = zod.object({
+  nodes: zod.array(
+    zod.object({
+      id: zod.number(),
+      type: zod.string(),
+      name: zod.string(),
+      slug: zod.string(),
+      category: zod.string().optional(),
+      chains: zod.array(zod.string()).optional(),
+      tags: zod.array(zod.string()).optional(),
+      description: zod.string().optional(),
+      createdAt: zod.string(),
+    }),
+  ),
+  edges: zod.array(
+    zod.object({
+      id: zod.number(),
+      fromNodeId: zod.number(),
+      toNodeId: zod.number(),
+      relationshipType: zod.string(),
+      weight: zod.number().optional(),
+      createdAt: zod.string(),
+    }),
+  ),
+});
+
+/**
+ * @summary Add an analyzed startup to the connection graph
+ */
+export const AddStartupToGraphBody = zod.object({
+  projectName: zod.string(),
+  projectType: zod.string(),
+  chain: zod.string(),
+  goals: zod.array(zod.string()).optional(),
+  topMatches: zod.array(zod.record(zod.string(), zod.unknown())).optional(),
 });
 
 /**

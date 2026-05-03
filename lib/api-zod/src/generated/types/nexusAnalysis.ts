@@ -9,6 +9,7 @@ import type { NexusAnalysisCapitalStrategy } from "./nexusAnalysisCapitalStrateg
 import type { NexusAnalysisExpansionStrategy } from "./nexusAnalysisExpansionStrategy";
 import type { NexusAnalysisPartnershipsItem } from "./nexusAnalysisPartnershipsItem";
 import type { NexusAnalysisRecommendedIntegrationsItem } from "./nexusAnalysisRecommendedIntegrationsItem";
+import type { NexusMatchScore } from "./nexusMatchScore";
 
 export interface NexusAnalysis {
   recommendedIntegrations: NexusAnalysisRecommendedIntegrationsItem[];
@@ -17,4 +18,5 @@ export interface NexusAnalysis {
   capitalStrategy: NexusAnalysisCapitalStrategy;
   networkScore: number;
   summary: string;
+  graphMatches: NexusMatchScore[];
 }

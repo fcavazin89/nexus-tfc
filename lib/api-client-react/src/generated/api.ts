@@ -27,8 +27,11 @@ import type {
   CreatePartnershipBody,
   EcosystemProject,
   HealthStatus,
+  NexusAddToGraphBody,
   NexusAnalysis,
   NexusAnalyzeBody,
+  NexusGraphData,
+  NexusGraphNode,
   Partnership,
   StatsSummary,
 } from "./api.schemas";
@@ -126,6 +129,167 @@ export const useNexusAnalyze = <
   TContext
 > => {
   return useMutation(getNexusAnalyzeMutationOptions(options));
+};
+
+/**
+ * @summary Get the full ecosystem connection graph
+ */
+export const getGetNexusGraphUrl = () => {
+  return `/api/nexus/graph`;
+};
+
+export const getNexusGraph = async (
+  options?: RequestInit,
+): Promise<NexusGraphData> => {
+  return customFetch<NexusGraphData>(getGetNexusGraphUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetNexusGraphQueryKey = () => {
+  return [`/api/nexus/graph`] as const;
+};
+
+export const getGetNexusGraphQueryOptions = <
+  TData = Awaited<ReturnType<typeof getNexusGraph>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getNexusGraph>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetNexusGraphQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getNexusGraph>>> = ({
+    signal,
+  }) => getNexusGraph({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getNexusGraph>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetNexusGraphQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getNexusGraph>>
+>;
+export type GetNexusGraphQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get the full ecosystem connection graph
+ */
+
+export function useGetNexusGraph<
+  TData = Awaited<ReturnType<typeof getNexusGraph>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getNexusGraph>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetNexusGraphQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Add an analyzed startup to the connection graph
+ */
+export const getAddStartupToGraphUrl = () => {
+  return `/api/nexus/graph/startup`;
+};
+
+export const addStartupToGraph = async (
+  nexusAddToGraphBody: NexusAddToGraphBody,
+  options?: RequestInit,
+): Promise<NexusGraphNode> => {
+  return customFetch<NexusGraphNode>(getAddStartupToGraphUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(nexusAddToGraphBody),
+  });
+};
+
+export const getAddStartupToGraphMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof addStartupToGraph>>,
+    TError,
+    { data: BodyType<NexusAddToGraphBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof addStartupToGraph>>,
+  TError,
+  { data: BodyType<NexusAddToGraphBody> },
+  TContext
+> => {
+  const mutationKey = ["addStartupToGraph"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof addStartupToGraph>>,
+    { data: BodyType<NexusAddToGraphBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return addStartupToGraph(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AddStartupToGraphMutationResult = NonNullable<
+  Awaited<ReturnType<typeof addStartupToGraph>>
+>;
+export type AddStartupToGraphMutationBody = BodyType<NexusAddToGraphBody>;
+export type AddStartupToGraphMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Add an analyzed startup to the connection graph
+ */
+export const useAddStartupToGraph = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof addStartupToGraph>>,
+    TError,
+    { data: BodyType<NexusAddToGraphBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof addStartupToGraph>>,
+  TError,
+  { data: BodyType<NexusAddToGraphBody> },
+  TContext
+> => {
+  return useMutation(getAddStartupToGraphMutationOptions(options));
 };
 
 /**

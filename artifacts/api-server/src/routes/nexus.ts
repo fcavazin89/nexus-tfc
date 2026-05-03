@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { openai } from "@workspace/integrations-openai-ai-server";
 import { NexusAnalyzeBody as NexusAnalyzeBodySchema } from "@workspace/api-zod";
+import { computeGraphMatches, addStartupNode, getFullGraph } from "../lib/matching";
 
 const router = Router();
 
@@ -61,17 +62,25 @@ Rules:
 - For stage "scale": focus on institutional and cross-ecosystem`;
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-5.4",
-      max_completion_tokens: 2000,
-      messages: [
-        { role: "system", content: "You are a Web3 ecosystem intelligence system. Always respond with valid JSON only, no markdown formatting." },
-        { role: "user", content: prompt },
-      ],
-    });
+    const [completion, graphMatches] = await Promise.all([
+      openai.chat.completions.create({
+        model: "gpt-5.4",
+        max_completion_tokens: 2000,
+        messages: [
+          { role: "system", content: "You are a Web3 ecosystem intelligence system. Always respond with valid JSON only, no markdown formatting." },
+          { role: "user", content: prompt },
+        ],
+      }),
+      computeGraphMatches(
+        projectType,
+        chain,
+        goals ?? [],
+        description ?? "",
+      ),
+    ]);
 
     const content = completion.choices[0]?.message?.content ?? "{}";
-    
+
     let analysis;
     try {
       analysis = JSON.parse(content);
@@ -79,10 +88,50 @@ Rules:
       analysis = JSON.parse(content.replace(/```json\n?|\n?```/g, "").trim());
     }
 
-    res.json(analysis);
+    res.json({ ...analysis, graphMatches });
   } catch (err) {
     req.log.error({ err }, "NEXUS analyze failed");
     res.status(500).json({ error: "Analysis failed" });
+  }
+});
+
+router.get("/nexus/graph", async (req, res) => {
+  try {
+    const graph = await getFullGraph();
+    res.json({
+      nodes: graph.nodes.map((n) => ({ ...n, createdAt: n.createdAt.toISOString() })),
+      edges: graph.edges.map((e) => ({ ...e, createdAt: e.createdAt.toISOString() })),
+    });
+  } catch (err) {
+    req.log.error({ err }, "Get graph failed");
+    res.status(500).json({ error: "Failed to fetch graph" });
+  }
+});
+
+router.post("/nexus/graph/startup", async (req, res) => {
+  const { projectName, projectType, chain, goals, topMatches } = req.body as {
+    projectName: string;
+    projectType: string;
+    chain: string;
+    goals?: string[];
+    topMatches?: unknown[];
+  };
+  if (!projectName || !projectType || !chain) {
+    res.status(400).json({ error: "projectName, projectType, and chain are required" });
+    return;
+  }
+  try {
+    const nodeId = await addStartupNode(projectName, projectType, chain, goals ?? [], topMatches as any);
+    const { nodes } = await getFullGraph();
+    const node = nodes.find((n) => n.id === nodeId);
+    if (!node) {
+      res.status(500).json({ error: "Node not found after insert" });
+      return;
+    }
+    res.status(201).json({ ...node, createdAt: node.createdAt.toISOString() });
+  } catch (err) {
+    req.log.error({ err }, "Add startup to graph failed");
+    res.status(500).json({ error: "Failed to add startup to graph" });
   }
 });
 

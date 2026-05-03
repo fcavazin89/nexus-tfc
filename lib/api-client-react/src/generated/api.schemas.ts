@@ -329,6 +329,60 @@ export interface NexusAnalyzeBody {
   description?: string;
 }
 
+export type NexusAddToGraphBodyTopMatchesItem = { [key: string]: unknown };
+
+export interface NexusAddToGraphBody {
+  projectName: string;
+  projectType: string;
+  chain: string;
+  goals?: string[];
+  topMatches?: NexusAddToGraphBodyTopMatchesItem[];
+}
+
+export interface NexusGraphNode {
+  id: number;
+  type: string;
+  name: string;
+  slug: string;
+  category?: string;
+  chains?: string[];
+  tags?: string[];
+  description?: string;
+  createdAt: string;
+}
+
+export interface NexusGraphEdge {
+  id: number;
+  fromNodeId: number;
+  toNodeId: number;
+  relationshipType: string;
+  weight?: number;
+  createdAt: string;
+}
+
+export interface NexusGraphData {
+  nodes: NexusGraphNode[];
+  edges: NexusGraphEdge[];
+}
+
+export type NexusMatchScoreBreakdown = {
+  categoryMatch: number;
+  chainAlignment: number;
+  tagRelevance: number;
+};
+
+export interface NexusMatchScore {
+  nodeId: number;
+  name: string;
+  type: string;
+  category?: string;
+  chains?: string[];
+  description?: string;
+  matchScore: number;
+  breakdown: NexusMatchScoreBreakdown;
+  relationshipType: string;
+}
+
 export type NexusAnalysisRecommendedIntegrationsItemImpact =
   (typeof NexusAnalysisRecommendedIntegrationsItemImpact)[keyof typeof NexusAnalysisRecommendedIntegrationsItemImpact];
 
@@ -369,4 +423,5 @@ export interface NexusAnalysis {
   capitalStrategy: NexusAnalysisCapitalStrategy;
   networkScore: number;
   summary: string;
+  graphMatches: NexusMatchScore[];
 }
