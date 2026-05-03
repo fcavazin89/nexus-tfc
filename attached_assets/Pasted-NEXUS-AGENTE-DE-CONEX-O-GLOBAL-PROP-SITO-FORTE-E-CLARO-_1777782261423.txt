@@ -1,0 +1,178 @@
+NEXUS — AGENTE DE CONEXÃO GLOBAL
+🧠 PROPÓSITO (FORTE E CLARO)
+
+Transformar startups Web3 isoladas em nós ativos de um ecossistema global interconectado.
+
+🔥 Tradução prática:
+
+NEXUS não conecta só blockchains.
+
+Ele conecta:
+
+projetos ↔ projetos
+startups ↔ investidores
+DAOs ↔ comunidades
+produtos ↔ liquidez
+ideias ↔ mercado
+🎯 MISSÃO
+
+Acelerar crescimento através de conexões estratégicas automatizadas.
+
+🔷 O QUE O NEXUS REALMENTE FAZ
+
+Ele atua como:
+
+🧠 1. Matchmaker inteligente
+conecta startups com parceiros
+sugere colaborações
+💰 2. Ponte de capital
+conecta com investidores
+integra com CAPITAL3
+🔗 3. Orquestrador de integrações
+APIs
+protocolos
+chains
+🌐 4. Expansão de ecossistema
+leva projeto para novas redes
+cria presença global
+🧩 DIFERENCIAL (ESSÊNCIA)
+
+O NEXUS transforma seu produto em rede
+
+⚙️ FUNCIONAMENTO
+Projeto criado
+↓
+NEXUS analisa
+↓
+Identifica oportunidades
+↓
+Sugere conexões
+↓
+Executa integrações
+↓
+Aumenta valor do projeto
+🧠 INTELIGÊNCIA DO NEXUS
+🔹 INPUT
+{
+  "project_type": "DeFi",
+  "stage": "growth",
+  "chain": "Ethereum",
+  "community_size": 1000
+}
+🔹 OUTPUT
+{
+  "recommended_integrations": [
+    "Uniswap",
+    "Polygon",
+    "Chainlink"
+  ],
+  "partnerships": [
+    "DAO X",
+    "Protocol Y"
+  ],
+  "expansion_strategy": "multi-chain deployment"
+}
+🔧 STACK TECNOLÓGICO
+🧠 Backend
+Node.js / Python
+OpenAI (decisão)
+Graph-based matching (Neo4j 🔥)
+🔗 Web3
+Ethers.js / viem
+APIs de protocolos
+🌐 Dados
+Graph DB (relacionamentos)
+APIs externas (protocolos, projetos)
+🧩 PROMPT BASE DO NEXUS
+You are NEXUS, a Web3 ecosystem connector.
+
+Your role is to:
+- identify strategic integrations
+- suggest partnerships
+- expand projects across ecosystems
+
+Analyze:
+- project type
+- maturity
+- network
+- goals
+
+Generate:
+- integrations
+- partnerships
+- expansion plan
+🖥 ALÉM DO DASHBOARD (O QUE VOCÊ PEDIU)
+
+Aqui está o pulo de nível 👇
+
+🔥 NEXUS COMO SERVIÇO (NÃO SÓ UI)
+🧠 1. AUTO-PARTNERSHIP ENGINE
+
+O sistema sugere e inicia parcerias automaticamente
+
+Exemplo:
+
+Seu projeto DeFi → integração com protocolo de liquidez
+🔗 2. CROSS-CHAIN EXPANSION SERVICE
+
+Expansão automatizada para outras redes
+
+Ethereum → Polygon → Arbitrum
+💰 3. CAPITAL ROUTING
+
+Direciona projetos para investidores certos
+
+baseado em perfil
+baseado em estágio
+🌐 4. NETWORK EFFECT ENGINE
+
+Quanto mais projetos, mais valor o sistema gera
+
+👉 isso é o que cria moat
+
+🤝 5. COLLABORATION LAYER
+co-build entre startups
+DAO partnerships
+joint ventures
+🧠 VISÃO AVANÇADA (SEU DIFERENCIAL REAL)
+
+NEXUS pode virar:
+
+🌐 “LinkedIn + AWS + YC para Web3”
+
+🔄 INTEGRAÇÃO COM OS AGENTES
+VECT0R → define estratégia
+↓
+CAPITAL3 → estrutura funding
+↓
+DAOX → governança
+↓
+NEXUS → conecta com o mundo
+📈 METRICAS DO NEXUS
+número de conexões
+integrações realizadas
+capital conectado
+crescimento via parcerias
+🚀 MVP DO NEXUS
+Fase 1:
+sugestões de integração (IA)
+lista de parceiros
+Fase 2:
+matching automático
+APIs básicas
+Fase 3:
+execução real (on-chain / off-chain)
+⚠️ ERRO CRÍTICO
+
+Não transforme o NEXUS em:
+
+❌ lista de APIs
+❌ diretório
+
+Transforme em:
+
+👉 sistema que gera conexões automaticamente
+
+🔥 FRASE DE POSICIONAMENTO
+
+“Your startup doesn’t scale alone. It connects.”

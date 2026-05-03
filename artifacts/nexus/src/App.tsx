@@ -9,6 +9,7 @@ import Agents from "@/pages/Agents";
 import Chains from "@/pages/Chains";
 import Partnerships from "@/pages/Partnerships";
 import Ecosystem from "@/pages/Ecosystem";
+import Connect from "@/pages/Connect";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/chains" component={() => <AppLayout><Chains /></AppLayout>} />
       <Route path="/partnerships" component={() => <AppLayout><Partnerships /></AppLayout>} />
       <Route path="/ecosystem" component={() => <AppLayout><Ecosystem /></AppLayout>} />
+      <Route path="/connect" component={() => <AppLayout><Connect /></AppLayout>} />
       <Route component={NotFound} />
     </Switch>
   );

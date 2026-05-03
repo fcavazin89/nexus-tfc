@@ -8,6 +8,58 @@
 import * as zod from "zod";
 
 /**
+ * @summary Analyze a project and generate AI-powered connection recommendations
+ */
+export const NexusAnalyzeBody = zod.object({
+  projectName: zod.string(),
+  projectType: zod.enum([
+    "DeFi",
+    "NFT",
+    "Gaming",
+    "DAO",
+    "Infrastructure",
+    "Bridge",
+    "Oracle",
+    "Social",
+    "Other",
+  ]),
+  stage: zod.enum(["idea", "mvp", "growth", "scale"]),
+  chain: zod.string(),
+  communitySize: zod.number().optional(),
+  goals: zod.array(zod.string()).optional(),
+  description: zod.string().optional(),
+});
+
+export const NexusAnalyzeResponse = zod.object({
+  recommendedIntegrations: zod.array(
+    zod.object({
+      name: zod.string(),
+      reason: zod.string(),
+      impact: zod.enum(["high", "medium", "low"]),
+    }),
+  ),
+  partnerships: zod.array(
+    zod.object({
+      name: zod.string(),
+      type: zod.string(),
+      synergy: zod.string(),
+    }),
+  ),
+  expansionStrategy: zod.object({
+    primaryChains: zod.array(zod.string()),
+    timeline: zod.string(),
+    rationale: zod.string(),
+  }),
+  capitalStrategy: zod.object({
+    fundingStage: zod.string(),
+    investorTypes: zod.array(zod.string()),
+    estimatedRange: zod.string(),
+  }),
+  networkScore: zod.number(),
+  summary: zod.string(),
+});
+
+/**
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({

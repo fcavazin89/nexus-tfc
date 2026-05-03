@@ -5,6 +5,7 @@ import partnershipsRouter from "./partnerships";
 import ecosystemRouter from "./ecosystem";
 import agentsRouter from "./agents";
 import statsRouter from "./stats";
+import nexusRouter from "./nexus";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(partnershipsRouter);
 router.use(ecosystemRouter);
 router.use(agentsRouter);
 router.use(statsRouter);
+router.use(nexusRouter);
 
 export default router;

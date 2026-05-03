@@ -19,7 +19,28 @@ tags:
     description: 2AG agent management
   - name: stats
     description: Dashboard stats and analytics
+  - name: nexus
+    description: NEXUS AI intelligence engine
 paths:
+  /nexus/analyze:
+    post:
+      operationId: nexusAnalyze
+      tags: [nexus]
+      summary: Analyze a project and generate AI-powered connection recommendations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NexusAnalyzeBody"
+      responses:
+        "200":
+          description: AI analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NexusAnalysis"
+
   /healthz:
     get:
       operationId: healthCheck
@@ -692,3 +713,84 @@ components:
         tvl:
           type: string
       required: [chainName, chainSymbol, agentCount, projectCount, partnershipCount]
+
+    NexusAnalyzeBody:
+      type: object
+      properties:
+        projectName:
+          type: string
+        projectType:
+          type: string
+          enum: [DeFi, NFT, Gaming, DAO, Infrastructure, Bridge, Oracle, Social, Other]
+        stage:
+          type: string
+          enum: [idea, mvp, growth, scale]
+        chain:
+          type: string
+        communitySize:
+          type: integer
+        goals:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+      required: [projectName, projectType, stage, chain]
+
+    NexusAnalysis:
+      type: object
+      properties:
+        recommendedIntegrations:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+              impact:
+                type: string
+                enum: [high, medium, low]
+            required: [name, reason, impact]
+        partnerships:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              synergy:
+                type: string
+            required: [name, type, synergy]
+        expansionStrategy:
+          type: object
+          properties:
+            primaryChains:
+              type: array
+              items:
+                type: string
+            timeline:
+              type: string
+            rationale:
+              type: string
+          required: [primaryChains, timeline, rationale]
+        capitalStrategy:
+          type: object
+          properties:
+            fundingStage:
+              type: string
+            investorTypes:
+              type: array
+              items:
+                type: string
+            estimatedRange:
+              type: string
+          required: [fundingStage, investorTypes, estimatedRange]
+        networkScore:
+          type: integer
+        summary:
+          type: string
+      required: [recommendedIntegrations, partnerships, expansionStrategy, capitalStrategy, networkScore, summary]

@@ -1,9 +1,10 @@
 import { Link, useLocation } from "wouter";
-import { Activity, Network, Users, Box, LayoutDashboard } from "lucide-react";
+import { Activity, Network, Users, Box, LayoutDashboard, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "NEXUS Intelligence", href: "/connect", icon: Sparkles, highlight: true },
   { name: "2AG Agents", href: "/agents", icon: Activity },
   { name: "Networks", href: "/chains", icon: Network },
   { name: "Partnerships", href: "/partnerships", icon: Users },
@@ -27,6 +28,7 @@ export function Sidebar() {
       <nav className="flex-1 px-4 space-y-2">
         {navItems.map((item) => {
           const isActive = location === item.href;
+          const isHighlight = item.highlight;
           return (
             <Link key={item.href} href={item.href}>
               <div
@@ -34,15 +36,21 @@ export function Sidebar() {
                   "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 relative overflow-hidden group cursor-pointer",
                   isActive
                     ? "text-primary bg-primary/10 border border-primary/20"
+                    : isHighlight
+                    ? "text-primary/80 bg-primary/5 border border-primary/15 hover:bg-primary/10 hover:border-primary/25"
                     : "text-muted-foreground hover:text-foreground hover:bg-white/5 border border-transparent"
                 )}
               >
                 {isActive && (
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(0,255,255,0.8)]" />
                 )}
-                <item.icon className={cn("w-5 h-5", isActive ? "text-primary" : "")} />
+                <item.icon className={cn("w-5 h-5", (isActive || isHighlight) ? "text-primary" : "")} />
                 <span className="tracking-wide">{item.name}</span>
-                
+                {isHighlight && !isActive && (
+                  <span className="ml-auto text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">
+                    AI
+                  </span>
+                )}
                 {/* Hover glow effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/10 to-transparent pointer-events-none" />
               </div>

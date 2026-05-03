@@ -27,6 +27,8 @@ import type {
   CreatePartnershipBody,
   EcosystemProject,
   HealthStatus,
+  NexusAnalysis,
+  NexusAnalyzeBody,
   Partnership,
   StatsSummary,
 } from "./api.schemas";
@@ -39,6 +41,92 @@ type AwaitedInput<T> = PromiseLike<T> | T;
 type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
+/**
+ * @summary Analyze a project and generate AI-powered connection recommendations
+ */
+export const getNexusAnalyzeUrl = () => {
+  return `/api/nexus/analyze`;
+};
+
+export const nexusAnalyze = async (
+  nexusAnalyzeBody: NexusAnalyzeBody,
+  options?: RequestInit,
+): Promise<NexusAnalysis> => {
+  return customFetch<NexusAnalysis>(getNexusAnalyzeUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(nexusAnalyzeBody),
+  });
+};
+
+export const getNexusAnalyzeMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof nexusAnalyze>>,
+    TError,
+    { data: BodyType<NexusAnalyzeBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof nexusAnalyze>>,
+  TError,
+  { data: BodyType<NexusAnalyzeBody> },
+  TContext
+> => {
+  const mutationKey = ["nexusAnalyze"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof nexusAnalyze>>,
+    { data: BodyType<NexusAnalyzeBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return nexusAnalyze(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type NexusAnalyzeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof nexusAnalyze>>
+>;
+export type NexusAnalyzeMutationBody = BodyType<NexusAnalyzeBody>;
+export type NexusAnalyzeMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Analyze a project and generate AI-powered connection recommendations
+ */
+export const useNexusAnalyze = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof nexusAnalyze>>,
+    TError,
+    { data: BodyType<NexusAnalyzeBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof nexusAnalyze>>,
+  TError,
+  { data: BodyType<NexusAnalyzeBody> },
+  TContext
+> => {
+  return useMutation(getNexusAnalyzeMutationOptions(options));
+};
 
 /**
  * @summary Health check

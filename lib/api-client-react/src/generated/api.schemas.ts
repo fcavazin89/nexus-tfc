@@ -293,3 +293,80 @@ export interface ChainBreakdown {
   partnershipCount: number;
   tvl?: string;
 }
+
+export type NexusAnalyzeBodyProjectType =
+  (typeof NexusAnalyzeBodyProjectType)[keyof typeof NexusAnalyzeBodyProjectType];
+
+export const NexusAnalyzeBodyProjectType = {
+  DeFi: "DeFi",
+  NFT: "NFT",
+  Gaming: "Gaming",
+  DAO: "DAO",
+  Infrastructure: "Infrastructure",
+  Bridge: "Bridge",
+  Oracle: "Oracle",
+  Social: "Social",
+  Other: "Other",
+} as const;
+
+export type NexusAnalyzeBodyStage =
+  (typeof NexusAnalyzeBodyStage)[keyof typeof NexusAnalyzeBodyStage];
+
+export const NexusAnalyzeBodyStage = {
+  idea: "idea",
+  mvp: "mvp",
+  growth: "growth",
+  scale: "scale",
+} as const;
+
+export interface NexusAnalyzeBody {
+  projectName: string;
+  projectType: NexusAnalyzeBodyProjectType;
+  stage: NexusAnalyzeBodyStage;
+  chain: string;
+  communitySize?: number;
+  goals?: string[];
+  description?: string;
+}
+
+export type NexusAnalysisRecommendedIntegrationsItemImpact =
+  (typeof NexusAnalysisRecommendedIntegrationsItemImpact)[keyof typeof NexusAnalysisRecommendedIntegrationsItemImpact];
+
+export const NexusAnalysisRecommendedIntegrationsItemImpact = {
+  high: "high",
+  medium: "medium",
+  low: "low",
+} as const;
+
+export type NexusAnalysisRecommendedIntegrationsItem = {
+  name: string;
+  reason: string;
+  impact: NexusAnalysisRecommendedIntegrationsItemImpact;
+};
+
+export type NexusAnalysisPartnershipsItem = {
+  name: string;
+  type: string;
+  synergy: string;
+};
+
+export type NexusAnalysisExpansionStrategy = {
+  primaryChains: string[];
+  timeline: string;
+  rationale: string;
+};
+
+export type NexusAnalysisCapitalStrategy = {
+  fundingStage: string;
+  investorTypes: string[];
+  estimatedRange: string;
+};
+
+export interface NexusAnalysis {
+  recommendedIntegrations: NexusAnalysisRecommendedIntegrationsItem[];
+  partnerships: NexusAnalysisPartnershipsItem[];
+  expansionStrategy: NexusAnalysisExpansionStrategy;
+  capitalStrategy: NexusAnalysisCapitalStrategy;
+  networkScore: number;
+  summary: string;
+}
