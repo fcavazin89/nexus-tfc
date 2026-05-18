@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { build as esbuild } from "esbuild";
 import esbuildPluginPino from "esbuild-plugin-pino";
-import { rm } from "node:fs/promises";
+import { rm, copyFile, access } from "node:fs/promises";
 
 // Plugins (e.g. 'esbuild-plugin-pino') may use `require` to resolve dependencies
 globalThis.require = createRequire(import.meta.url);
@@ -32,7 +32,6 @@ async function buildAll() {
       "sharp",
       "better-sqlite3",
       "sqlite3",
-      "canvas",
       "bcrypt",
       "argon2",
       "fsevents",
@@ -120,7 +119,59 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
   });
 }
 
-buildAll().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+async function copyWasm() {
+  const localDistDir = path.resolve(artifactDir, "dist");
+  // Tenta múltiplos caminhos onde o sql.js pode estar instalado no monorepo
+  const wasmCandidates = [
+    path.resolve(artifactDir, "../../node_modules/sql.js/dist/sql-wasm.wasm"),
+    path.resolve(artifactDir, "../../node_modules/.pnpm/sql.js@1.14.1/node_modules/sql.js/dist/sql-wasm.wasm"),
+    path.resolve(artifactDir, "../../lib/db/node_modules/sql.js/dist/sql-wasm.wasm"),
+  ];
+
+  // Busca recursiva no node_modules/.pnpm
+  const pnpmDir = path.resolve(artifactDir, "../../node_modules/.pnpm");
+  try {
+    const { readdirSync } = await import("node:fs");
+    const entries = readdirSync(pnpmDir);
+    const sqlEntry = entries.find((e) => e.startsWith("sql.js@"));
+    if (sqlEntry) {
+      wasmCandidates.unshift(
+        path.resolve(pnpmDir, sqlEntry, "node_modules/sql.js/dist/sql-wasm.wasm")
+      );
+    }
+  } catch { /* ignora */ }
+
+  let wasmSrc = null;
+  for (const candidate of wasmCandidates) {
+    try {
+      await access(candidate);
+      wasmSrc = candidate;
+      break;
+    } catch { /* tenta próximo */ }
+  }
+
+  if (!wasmSrc) {
+    throw new Error(
+      `sql-wasm.wasm não encontrado. Caminhos tentados:\n${wasmCandidates.join("\n")}\n` +
+      `Execute: pnpm install`
+    );
+  }
+
+  const wasmDest = path.resolve(localDistDir, "sql-wasm.wasm");
+
+  try {
+    await copyFile(wasmSrc, wasmDest);
+    console.log("✓ sql-wasm.wasm copiado para dist/");
+  } catch {
+    throw new Error(
+      `Falha ao copiar sql-wasm.wasm de ${wasmSrc} para ${wasmDest}`
+    );
+  }
+}
+
+buildAll()
+  .then(() => copyWasm())
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

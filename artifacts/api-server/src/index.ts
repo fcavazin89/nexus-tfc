@@ -1,5 +1,7 @@
+import http from "node:http";
 import app from "./app";
 import { logger } from "./lib/logger";
+import { initMetricsAgent } from "./metrics/MetricsAgent";
 
 const rawPort = process.env["PORT"];
 
@@ -15,11 +17,17 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-app.listen(port, (err) => {
-  if (err) {
-    logger.error({ err }, "Error listening on port");
-    process.exit(1);
-  }
+const server = http.createServer(app);
 
+// Inicializa o Metrics Agent (WebSocket em /metrics)
+initMetricsAgent(server);
+
+server.listen(port, () => {
   logger.info({ port }, "Server listening");
+  logger.info({ url: `ws://localhost:${port}/metrics` }, "MetricsAgent WebSocket ready");
+});
+
+server.on("error", (err) => {
+  logger.error({ err }, "Error starting server");
+  process.exit(1);
 });

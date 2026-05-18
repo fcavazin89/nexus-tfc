@@ -12,7 +12,7 @@ version = "1.0.0"
 [[services]]
 name = "web"
 paths = [ "/" ]
-localPort = 18245
+localPort = 7002
 
 [services.development]
 run = "pnpm --filter @workspace/nexus run dev"
@@ -27,5 +27,5 @@ from = "/*"
 to = "/index.html"
 
 [services.env]
-PORT = "18245"
+PORT = "7002"
 BASE_PATH = "/"

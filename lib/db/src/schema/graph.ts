@@ -1,25 +1,25 @@
-import { pgTable, serial, text, integer, real, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, integer, text, real } from "drizzle-orm/sqlite-core";
 
-export const graphNodesTable = pgTable("graph_nodes", {
-  id: serial("id").primaryKey(),
+export const graphNodesTable = sqliteTable("graph_nodes", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   type: text("type").notNull(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   category: text("category"),
-  chains: text("chains").array(),
-  tags: text("tags").array(),
+  chains: text("chains").default("[]"),   // JSON array serializado
+  tags: text("tags").default("[]"),       // JSON array serializado
   description: text("description"),
-  metadata: jsonb("metadata"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  metadata: text("metadata").default("{}"), // JSON serializado (era jsonb)
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()).notNull(),
 });
 
-export const graphEdgesTable = pgTable("graph_edges", {
-  id: serial("id").primaryKey(),
+export const graphEdgesTable = sqliteTable("graph_edges", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   fromNodeId: integer("from_node_id").notNull(),
   toNodeId: integer("to_node_id").notNull(),
   relationshipType: text("relationship_type").notNull(),
   weight: real("weight").default(1.0),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).$defaultFn(() => new Date()).notNull(),
 });
 
 export type GraphNode = typeof graphNodesTable.$inferSelect;

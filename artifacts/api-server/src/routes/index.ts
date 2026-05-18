@@ -6,6 +6,7 @@ import ecosystemRouter from "./ecosystem";
 import agentsRouter from "./agents";
 import statsRouter from "./stats";
 import nexusRouter from "./nexus";
+import metricsRouter from "../metrics/metricsRouter";
 
 const router: IRouter = Router();
 
@@ -16,5 +17,6 @@ router.use(ecosystemRouter);
 router.use(agentsRouter);
 router.use(statsRouter);
 router.use(nexusRouter);
+router.use(metricsRouter);
 
 export default router;
